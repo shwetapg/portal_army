@@ -166,6 +166,27 @@ if(!$_SESSION['username'])
       echo "<script>location='training_result.php'</script>"; 
     }
   ?>   
+  <?php
+    if(isset($_POST["delete"]))
+    {
+      $s=$_POST['pk'];
+     $url1 = 'https://api.neptune.bitjiniapps.com/add_live_training/'.$s.'/';
+            $options1 = array(
+              'http' => array(
+              'header'  => array(
+                        'Authorization: '.'Token 7733513f8a2d44f607ebd4135a5d6a484644776b',
+                        ),
+                'method'  => 'DELETE',
+              ),
+            );
+            $context1 = stream_context_create($options1);
+            $output1 = file_get_contents($url1, false,$context1);
+            $arr4 = json_decode($output1,true);
+            
+            echo '<script>alert("Deleted Training Successfully");</script>';
+            echo "<script>location='training_db.php'</script>";
+      }
+    ?>
   <!-- Left Panel -->
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
@@ -260,6 +281,7 @@ if(!$_SESSION['username'])
                 <th style="width:3%;">Add Route</th>
                 <th style="width:3%;">Details</th>
                 <th style="width:3%;">Result</th>
+                <th style="width:3%;">Delete</th>
               </tr>
             </thead>
             <tbody id="myTable" >
@@ -277,6 +299,7 @@ if(!$_SESSION['username'])
                 <td><form method="post"><input type="hidden" name="pk" value="<?php echo $jsonArray['pk']; ?>"><button type="submit" name="submit_more_route" class="btn" style="background-color: #728370;color: #fff;">Add More Route</button></form></td>
                 <td><form method="post"><input type="hidden" name="pk" value="<?php echo $jsonArray['pk']; ?>"><button type="submit" name="submit_tr_dtl" class="btn" style="background-color: #728370;color: #fff;"><i class="fa fa-eye"></i></button></form></td>
                 <td><form method="post"><input type="hidden" name="pk" value="<?php echo $jsonArray['pk']; ?>"><button type="submit" name="submit_tr_result" class="btn" style="background-color: #728370;color: #fff;">View</button></form></td>
+                <td><form method="post"><input type="hidden" name="pk" value="<?php echo $jsonArray['pk']; ?>"><button type="submit" name="delete" class="btn btn-danger" onclick="return confirm('Delete Training?')"><i class="fa fa-trash"></i></button></form></td>
               </tr>
               
              <?php } ?> 

@@ -190,7 +190,6 @@ if(!$_SESSION['username'])
     // print_r($arr2);
 ?> 
 <?php
- $s;
  if(isset($_POST['tb_ls'])){
     $url2 = 'https://api.neptune.bitjiniapps.com/training_list_based_on_route/';
     $data = array(
@@ -208,19 +207,7 @@ if(!$_SESSION['username'])
     $context2 = stream_context_create($options);
     $output2 = file_get_contents($url2, false,$context2);
     $arr3 = json_decode($output2,true);
-
-     foreach ($arr3 as $value) {
-      foreach ($value as $value1) {
-        // foreach ($value1 as $value2) {
-     $s1= $value1['route_name'];
-     $s=$s1;
-    // }
-         
   }
-}
-  
-  }
-   echo $s;
 ?> 
 
 <?php
@@ -471,7 +458,7 @@ if(!$_SESSION['username'])
                           </div>
                          </div><!--row--><br/>   
                            
-                      <div style="font-weight: bold;"><?php echo $s; ?></div><br/>     <div class="card" style="box-shadow: 0 4px 8px 5px rgba(0,0,0,0.2);width:100%;"> 
+                      <div style="font-weight: bold;"><?php echo $arr3[0][0]['route_name']; ?></div><br/>     <div class="card" style="box-shadow: 0 4px 8px 5px rgba(0,0,0,0.2);width:100%;"> 
                          <table class="table table-bordered table-striped" id="myTable" style="box-shadow:0 0px 0px rgba(0,0,0,0.16), 0 1px 1px rgba(0,0,0,0.23);background-color:white;">
                           <thead>
                             <tr style="color:black;">
@@ -504,7 +491,7 @@ if(!$_SESSION['username'])
                             <td><?php echo $arr3[$i][$j]['start_time']; ?></td>
                             <td><?php echo $arr3[$i][$j]['stop_time']; ?></td>
                             <td><img id="myImg" style="max-width:50%;" onclick="onClick(this)" src="<?php echo $arr3[$i][1]['checkpt_url']; ?>" class="w3-hover-opacity"></td>
-                            <td><?php $s2=$arr3[$i-1][$j]['stop_time']; $s1=$arr3[$i][$j]['start_time']; $sss=( strtotime($s1) - strtotime($s2) ) / 60;  echo $sss." Mins"; ?></td>
+                            <td><?php $s2=$arr3[$i-1][$j]['stop_time']; $s1=$arr3[$i][$j]['start_time']; $sss=( strtotime($s1) - strtotime($s2) ) / 60; if($s1=="" || $s2==""){ echo "0";} else{ echo $sss." Mins";} ?></td>
                          
                       <td><?php $s2=$arr3[$i-1][$j]['stop_time']; $s1=$arr3[$i][$j]['start_time'];  $sss=( strtotime($s1) - strtotime($s2) ) / 60; $m1=$arr3[$i][1]['check_point'][$p]['min1']; $m2=$arr3[$i][1]['check_point'][$p]['min2']; $m3=$arr3[$i][1]['check_point'][$p]['min3']; $m4=$arr3[$i][1]['check_point'][$p]['min4']; $m5=$arr3[$i][1]['check_point'][$p]['min5']; $m6=$arr3[$i][1]['check_point'][$p]['min6']; if($sss<=$m1){ echo $arr3[$i][1]['check_point'][$p]['point1'];} elseif($sss<=$m2){ echo $arr3[$i][1]['check_point'][$p]['point2'];} elseif($sss<=$m3){ echo $arr3[$i][1]['check_point'][$p]['point3'];} elseif($sss<=$m4){ echo $arr3[$i][1]['check_point'][$p]['point4'];} elseif($sss<=$m5){ echo $arr3[$i][1]['check_point'][$p]['point5'];} elseif($sss>=$m6){ echo $arr3[$i][1]['check_point'][$p]['point6'];} ?> </td> 
                            <?php $a = 1; }?>
